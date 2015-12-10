@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -17,6 +18,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] init];
+    self.window.frame = [[UIScreen mainScreen] bounds];
+    
+    self.mainTabBarController = [[MainViewController alloc] init];
+    LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
+    self.testVC2= [[Test2ViewController alloc]initWithLeftView:leftVC MainView:self.mainTabBarController];
+//    [self.testVC2 setPanEnable:NO];
+    self.window.rootViewController = self.testVC2;
+    [self.window makeKeyAndVisible];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     return YES;
 }
 
