@@ -66,12 +66,27 @@
     label.textAlignment = alignment;
     return label;
 }
-+(UILabel *)labelwithFrame:(CGRect)frame font:(CGFloat)font text:(NSString*)text
++(UILabel *)labelwithFrame:(CGRect)frame font:(CGFloat)font text:(NSString*)text color:(UIColor*)color
 {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont systemFontOfSize:font];
     label.text = text;
+    label.textColor = color;
     return label;
 }
++ (UIButton *)buttonWithSize:(CGSize)size title:(NSString *)title selectTitle:(NSString *)selectTitle layer:(BOOL)layer target:(id)target action:(SEL)action{
+    UIButton *btn = [[UIButton alloc] init];
+    btn.size = size;
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:selectTitle forState:UIControlStateSelected];
+    if (layer == YES) {
+        btn.layer.borderWidth = 2;
+        btn.layer.borderColor = [UIColor whiteColor].CGColor;
+        
+    }
 
+    return btn;
+}
 @end

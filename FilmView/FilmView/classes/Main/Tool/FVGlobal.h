@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ProjectBaseFrame/ProjectBaseFrame.h>
 #import "AFNetworking.h"
+#import "UIView+Utils.h"
 #import "ToolUtil.h"
 #import "HttpRequestHelper.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
 
+#define IOSVersion(_version) ([[[UIDevice currentDevice] systemVersion] doubleValue] >= _version)
 #define UIScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define UIScreenHeight [[UIScreen mainScreen] bounds].size.height
 //叶显进 352129195406090011

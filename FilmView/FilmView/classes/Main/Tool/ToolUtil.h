@@ -21,6 +21,9 @@
 
 +(UILabel *)labelWithFrame:(CGRect)frame font:(CGFloat)font color:(UIColor*)color Alignment:(NSTextAlignment)alignment text:(NSString*)text;
 
-+(UILabel *)labelwithFrame:(CGRect)frame font:(CGFloat)font text:(NSString*)text;
+//自定义label
++(UILabel *)labelwithFrame:(CGRect)frame font:(CGFloat)font text:(NSString*)text color:(UIColor*)color;
+
++ (UIButton *)buttonWithSize:(CGSize)size title:(NSString *)title selectTitle:(NSString *)selectTitle layer:(BOOL)layer target:(id)target action:(SEL)action;
 
 @end

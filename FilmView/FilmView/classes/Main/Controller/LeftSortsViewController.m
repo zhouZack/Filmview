@@ -72,7 +72,7 @@
         [app.testVC2 closedLeftView];
         SearchViewController *search = [[SearchViewController alloc] init];
         [(UINavigationController *)app.mainTabBarController.selectedViewController pushViewController:search animated:YES];
-    }else if (indexPath.row ==2){
+    }else if (indexPath.row ==1){
         [app.testVC2 closedLeftView];
        CollectViewController *collect = [[CollectViewController alloc] init];
         [(UINavigationController *)app.mainTabBarController.selectedViewController pushViewController:collect animated:YES];

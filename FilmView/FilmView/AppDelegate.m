@@ -24,7 +24,7 @@
     self.mainTabBarController = [[MainViewController alloc] init];
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
     self.testVC2= [[Test2ViewController alloc]initWithLeftView:leftVC MainView:self.mainTabBarController];
-//    [self.testVC2 setPanEnable:NO];
+    [self.testVC2 setPanEnable:NO];
     self.window.rootViewController = self.testVC2;
     [self.window makeKeyAndVisible];
     

@@ -36,6 +36,20 @@
         self.navigationController.navigationItem.rightBarButtonItem = item;
     }
 }
+- (void)addUIbarButtonItemWithName:(NSString *)name left:(BOOL)left frame:(CGRect)frame target:(id)target action:(SEL)action{
+    UIButton *btn = [[UIButton alloc] initWithFrame:frame];
+    [btn setTitle:name forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    if (left == YES) {
+        self.navigationItem.leftBarButtonItem = item;
+    }else{
+        self.navigationItem.rightBarButtonItem = item;
+    }
+
+}
 -(void)changeLeftList{
     AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
