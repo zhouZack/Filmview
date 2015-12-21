@@ -89,4 +89,11 @@
 
     return btn;
 }
++(NSString*)changeImageStringWith:(NSString*)str
+{
+    NSMutableString*img = [NSMutableString stringWithFormat:@"%@",str];
+    [img replaceOccurrencesOfString:@"w" withString:@"200" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 25)];
+    [img replaceOccurrencesOfString:@"h" withString:@"280" options:NSCaseInsensitiveSearch range:NSMakeRange(5, 30)];
+    return [NSString stringWithFormat:@"%@",img];
+}
 @end

@@ -145,7 +145,8 @@
     
     DetailViewController *detal = [[DetailViewController alloc] init];
     MovieModel *model = _wsDateSource[indexPath.section][indexPath.row];
-    detal.moedel = model;
+    detal.myId = model.myId;
+    
     [self.navigationController pushViewController:detal animated:YES];
     
 }

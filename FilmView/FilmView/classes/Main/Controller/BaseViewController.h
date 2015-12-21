@@ -16,7 +16,6 @@
 - (void)addUIbarButtonItemWithImage:(NSString*)image left:(BOOL)left frame:(CGRect)frame target:(id)target action:(SEL)action;
 
 - (void)addUIbarButtonItemWithName:(NSString *)name left:(BOOL)left frame:(CGRect)frame target:(id)target action:(SEL)action;
-
 - (void)changeLeftList;
 
 @end

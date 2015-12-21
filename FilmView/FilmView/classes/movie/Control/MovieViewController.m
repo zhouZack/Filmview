@@ -43,6 +43,7 @@
 }
 
 - (void)setNav{
+    [FilmCoreDateHelper share].coreDataName = @"FilmCoreDate";
     [self addtitleWithName:@"热映"];
     [self addUIbarButtonItemWithImage:@"menu@2x" left:YES frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
     [self addUIbarButtonItemWithName:@"待映" left:NO frame:CGRectMake(0, 0, 40, 40) target:self action:@selector(comeWaitShow)];
@@ -171,8 +172,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DetailViewController *detail = [[DetailViewController alloc] init];
     
-    detail.moedel = _dateSource[indexPath.row-1];
     
+    MovieModel *model = _dateSource[indexPath.row-1];
+    detail.myId = model.myId;
     [self.navigationController pushViewController:detail animated:YES];
 }
 -(CGSize)sizeForPageInFlowView:(PagedFlowView *)flowView{

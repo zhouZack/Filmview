@@ -11,5 +11,5 @@
 @interface DetailViewController : BaseViewController
 
 @property (nonatomic ,strong)MovieModel *moedel;
-
+@property (nonatomic ,strong)NSString *myId;
 @end

@@ -23,7 +23,6 @@
 
 
 @property (nonatomic ,copy)NSString   *snum;//评论人数
-@property (nonatomic ,copy)NSString   *cat;//电影类型例：动作／犯罪
 
 
 - (instancetype)initWithDict:(NSDictionary *)dictionary;

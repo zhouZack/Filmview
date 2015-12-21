@@ -34,5 +34,37 @@ typedef void(^HttpFailureBlcok) (NSError *error);
  详情界面:BoxOffice数据请求
  */
 + (void)detailControlWithBoxOfficeWithId:(NSString*)dID success:(HttpSuccessBlock)success Failure:(HttpFailureBlcok)failure;
+/**
+ 演员详情界面:演员信息
+ */
++ (void)actorDetailControlWithAbstractId:(NSString *)myId success:(HttpSuccessBlock)success Failure:(HttpFailureBlcok)failure;
+/**
+ 演员详情界面:演过的电影信息
+ */
++ (void)actorDetailControlWithWorkId:(NSString *)myId success:(HttpSuccessBlock)success Failure:(HttpFailureBlcok)failure;
+/**
+ 专题界面数据
+ */
++ (void)specialTopicControlWithInteger:(NSInteger)integer success:(HttpSuccessBlock)success Failure:(HttpFailureBlcok)failure;
+/**
+ 专题详情界面数据
+ */
++ (void)specialDetailControlWithMyId:(NSString*)myId success:(HttpSuccessBlock)success Failure:(HttpFailureBlcok)failure;
+/**
+ 影讯界面数据
+ */
++(void)informationControlWithInteger:(NSInteger)integer success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
+/**
+ 影讯详情界面
+ */
++ (void)informationDetailWithMyId:(NSString*)myId success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
+
+
+
+
+
+
+
+
 
 @end

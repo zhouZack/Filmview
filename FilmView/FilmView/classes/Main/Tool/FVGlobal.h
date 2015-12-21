@@ -13,6 +13,7 @@
 #import "HttpRequestHelper.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
+#import "FilmCoreDateHelper.h"
 
 #define IOSVersion(_version) ([[[UIDevice currentDevice] systemVersion] doubleValue] >= _version)
 #define UIScreenWidth [[UIScreen mainScreen] bounds].size.width
