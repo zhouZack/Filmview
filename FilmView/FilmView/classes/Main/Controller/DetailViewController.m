@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "ActorDetailViewController.h"
+#import "PhotoViewControl.h"
 
 @interface DetailViewController ()
 
@@ -199,6 +200,10 @@
     [self.scrollView addSubview:descriptionLabel];
     
     UIView *descriptionImage = [[UIView alloc] initWithFrame:CGRectMake(10, descriptionLabel.bottom+10, UIScreenWidth-20, 100)];
+    //添加点击剧照部位手势
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+    [descriptionImage addGestureRecognizer:tapGesture];
+
     CGFloat imageWidth = (descriptionImage.width-5*5)/4;
     CGFloat imageHeight = descriptionImage.height-10;
     if (self.descriptionImage.count >=4) {
@@ -240,8 +245,15 @@
     self.scrollView.contentSize = CGSizeMake(0, _separateLabel.bottom);
 
     [self reloadActorData];
+
     
-    
+}
+#pragma mark- 点击剧照部分手势响应代码
+- (void)tapClick:(UITapGestureRecognizer*)tapGesture
+{
+    PhotoViewControl *photo = [[PhotoViewControl alloc] init];
+    photo.myId = self.myId;
+    [self.navigationController pushViewController:photo animated:YES];
     
     
 }
@@ -253,8 +265,6 @@
             NSArray *directors = responseObject[@"data"][@"directors"];
             NSArray *actors = responseObject[@"data"][@"actors"];
 
-            
-            //
             for (NSDictionary *dict in directors) {
          
                 if (dict[@"cnm"] !=nil&&dict[@"enm"] !=nil&&dict[@"avatar"] !=nil&&dict[@"id"]!=nil) {
@@ -264,7 +274,6 @@
                     [mDict setObject:dict[@"avatar"] forKey:@"avatar"];
                     [mDict setObject:dict[@"id"] forKey:@"id"];
                     [weakSelf.directorArray addObject:mDict];
-//                    [weakSelf.actorAndDirectorArray addObject:mDict];
                 }
                
             }
@@ -276,7 +285,6 @@
                 [mDict setObject:dict[@"avatar"] forKey:@"avatar"];
                 [mDict setObject:dict[@"id"] forKey:@"id"];
                 [weakSelf.actorArray addObject:mDict];
-//                [weakSelf.actorAndDirectorArray addObject:mDict];
                 }
             }
             [weakSelf setActorData];
@@ -316,6 +324,9 @@
     }
     //演员部分数据
     UILabel *aLabel = [ToolUtil labelwithFrame:CGRectMake((imageWidth+7)*self.directorArray.count, 5, 60, 30) font:15 text:@"演员" color:[UIColor blackColor]];
+    if (self.directorArray.count == 0) {
+        aLabel.width = 0;
+    }
     [actorScrollView addSubview:aLabel];
     for (int i =0; i<self.actorArray.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -345,12 +356,15 @@
     }
     NSInteger number = self.directorArray.count +self.actorArray.count;
     actorScrollView.contentSize = CGSizeMake(number*(imageWidth+7)-7, 0);
-    
+    if (self.actorArray.count==0&&self.directorArray.count ==0) {
+        actorScrollView.height = 0;
+    }
     [self.scrollView addSubview:actorScrollView];
     _separateLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, actorScrollView.bottom, UIScreenWidth, 20)];
     _separateLabel2.backgroundColor = RGBColor(239, 239, 239);
     [self.scrollView addSubview:_separateLabel2];
     self.scrollView.contentSize = CGSizeMake(0, _separateLabel2.bottom);
+
     [self reloadRankingData];
     
 }

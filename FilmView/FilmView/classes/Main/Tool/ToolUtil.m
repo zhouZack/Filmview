@@ -96,4 +96,20 @@
     [img replaceOccurrencesOfString:@"h" withString:@"280" options:NSCaseInsensitiveSearch range:NSMakeRange(5, 30)];
     return [NSString stringWithFormat:@"%@",img];
 }
++ (NSString*)changeDeleteImageStringWith:(NSString*)str
+{
+    NSMutableString *img = [NSMutableString stringWithFormat:@"%@",str];
+    [img replaceOccurrencesOfString:@"/w.h" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, img.length)];
+    return [NSString stringWithFormat:@"%@",img];
+}
++(UIBarButtonItem*)barButtonWithImage:(NSString*)image frame:(CGRect)frame left:(BOOL)left target:(id)taget action:(SEL)action
+{
+    UIButton*btn = [[UIButton alloc] initWithFrame:frame];
+    [btn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+    [btn addTarget:taget action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*barItm = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    return barItm;
+    
+    
+}
 @end

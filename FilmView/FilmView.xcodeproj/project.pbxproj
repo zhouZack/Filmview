@@ -151,10 +151,22 @@
 		182B17AC1C263FE200C263B7 /* SpecialDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182B17AB1C263FE200C263B7 /* SpecialDetailViewController.m */; };
 		182B17AF1C26463F00C263B7 /* SpecialDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 182B17AE1C26463F00C263B7 /* SpecialDetailModel.m */; };
 		182B17B21C264D3600C263B7 /* SpecialDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 182B17B11C264D3600C263B7 /* SpecialDetailCell.m */; };
+		1843D6C71C2FED1D00D8FD2D /* PhotoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843D6C61C2FED1D00D8FD2D /* PhotoDetailCell.m */; };
 		188920D21C27A1B40078DD74 /* InDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920D11C27A1B40078DD74 /* InDetailViewController.m */; };
 		188920D51C27D7F00078DD74 /* InDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920D41C27D7F00078DD74 /* InDetailModel.m */; };
+		188920D81C2A6EA60078DD74 /* EnterpoDeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920D71C2A6EA60078DD74 /* EnterpoDeViewController.m */; };
+		188920DB1C2A79280078DD74 /* EnterPoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920DA1C2A79280078DD74 /* EnterPoCell.m */; };
+		188920DE1C2A794D0078DD74 /* EnterPoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920DD1C2A794D0078DD74 /* EnterPoModel.m */; };
+		188920E11C2B8D050078DD74 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920E01C2B8D050078DD74 /* SearchModel.m */; };
+		188920E41C2B8D2E0078DD74 /* SearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920E31C2B8D2E0078DD74 /* SearchViewCell.m */; };
+		188920E71C2CE4AC0078DD74 /* CollectControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920E61C2CE4AC0078DD74 /* CollectControlCell.m */; };
+		188920EA1C2D23C60078DD74 /* PhotoViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920E91C2D23C60078DD74 /* PhotoViewControl.m */; };
+		188920ED1C2D28040078DD74 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920EC1C2D28040078DD74 /* PhotoCell.m */; };
+		188920F01C2D3B7E0078DD74 /* PhotoDetailControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 188920EF1C2D3B7E0078DD74 /* PhotoDetailControl.m */; };
 		188CB6D91C269F3B005DBC90 /* InformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188CB6D81C269F3B005DBC90 /* InformationCell.m */; };
 		188CB6DC1C269F54005DBC90 /* InformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188CB6DB1C269F54005DBC90 /* InformationModel.m */; };
+		189C101D1C3118B10080E3D9 /* MyLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C101C1C3118B10080E3D9 /* MyLayout.m */; };
+		189C10201C32595B0080E3D9 /* WaitshowControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C101F1C32595B0080E3D9 /* WaitshowControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -409,14 +421,38 @@
 		182B17AE1C26463F00C263B7 /* SpecialDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecialDetailModel.m; sourceTree = "<group>"; };
 		182B17B01C264D3600C263B7 /* SpecialDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecialDetailCell.h; sourceTree = "<group>"; };
 		182B17B11C264D3600C263B7 /* SpecialDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecialDetailCell.m; sourceTree = "<group>"; };
+		1843D6C51C2FED1D00D8FD2D /* PhotoDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailCell.h; sourceTree = "<group>"; };
+		1843D6C61C2FED1D00D8FD2D /* PhotoDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailCell.m; sourceTree = "<group>"; };
 		188920D01C27A1B40078DD74 /* InDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InDetailViewController.h; sourceTree = "<group>"; };
 		188920D11C27A1B40078DD74 /* InDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InDetailViewController.m; sourceTree = "<group>"; };
 		188920D31C27D7F00078DD74 /* InDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InDetailModel.h; sourceTree = "<group>"; };
 		188920D41C27D7F00078DD74 /* InDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InDetailModel.m; sourceTree = "<group>"; };
+		188920D61C2A6EA60078DD74 /* EnterpoDeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterpoDeViewController.h; sourceTree = "<group>"; };
+		188920D71C2A6EA60078DD74 /* EnterpoDeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterpoDeViewController.m; sourceTree = "<group>"; };
+		188920D91C2A79280078DD74 /* EnterPoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterPoCell.h; sourceTree = "<group>"; };
+		188920DA1C2A79280078DD74 /* EnterPoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPoCell.m; sourceTree = "<group>"; };
+		188920DC1C2A794D0078DD74 /* EnterPoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterPoModel.h; sourceTree = "<group>"; };
+		188920DD1C2A794D0078DD74 /* EnterPoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPoModel.m; sourceTree = "<group>"; };
+		188920DF1C2B8D050078DD74 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
+		188920E01C2B8D050078DD74 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
+		188920E21C2B8D2E0078DD74 /* SearchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewCell.h; sourceTree = "<group>"; };
+		188920E31C2B8D2E0078DD74 /* SearchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewCell.m; sourceTree = "<group>"; };
+		188920E51C2CE4AC0078DD74 /* CollectControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectControlCell.h; sourceTree = "<group>"; };
+		188920E61C2CE4AC0078DD74 /* CollectControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectControlCell.m; sourceTree = "<group>"; };
+		188920E81C2D23C60078DD74 /* PhotoViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewControl.h; sourceTree = "<group>"; };
+		188920E91C2D23C60078DD74 /* PhotoViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewControl.m; sourceTree = "<group>"; };
+		188920EB1C2D28040078DD74 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
+		188920EC1C2D28040078DD74 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		188920EE1C2D3B7E0078DD74 /* PhotoDetailControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailControl.h; sourceTree = "<group>"; };
+		188920EF1C2D3B7E0078DD74 /* PhotoDetailControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailControl.m; sourceTree = "<group>"; };
 		188CB6D71C269F3B005DBC90 /* InformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationCell.h; sourceTree = "<group>"; };
 		188CB6D81C269F3B005DBC90 /* InformationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationCell.m; sourceTree = "<group>"; };
 		188CB6DA1C269F54005DBC90 /* InformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationModel.h; sourceTree = "<group>"; };
 		188CB6DB1C269F54005DBC90 /* InformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationModel.m; sourceTree = "<group>"; };
+		189C101B1C3118B10080E3D9 /* MyLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLayout.h; sourceTree = "<group>"; };
+		189C101C1C3118B10080E3D9 /* MyLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLayout.m; sourceTree = "<group>"; };
+		189C101E1C32595B0080E3D9 /* WaitshowControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitshowControl.h; sourceTree = "<group>"; };
+		189C101F1C32595B0080E3D9 /* WaitshowControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitshowControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,13 +624,13 @@
 			isa = PBXGroup;
 			children = (
 				181C4D621C1475E000A5FB5F /* classes */,
-				181C4D321C1472CA00A5FB5F /* AppDelegate.m */,
 				1816AE2A1C2047D100036DD1 /* FilmCoreDate.xcdatamodeld */,
 				1816AE321C20FF3A00036DD1 /* CollectItem+CoreDataProperties.h */,
 				1816AE331C20FF3A00036DD1 /* CollectItem+CoreDataProperties.m */,
 				1816AE341C20FF3A00036DD1 /* CollectItem.h */,
 				1816AE351C20FF3A00036DD1 /* CollectItem.m */,
 				181C4D311C1472CA00A5FB5F /* AppDelegate.h */,
+				181C4D321C1472CA00A5FB5F /* AppDelegate.m */,
 				181C4D341C1472CA00A5FB5F /* ViewController.h */,
 				181C4D351C1472CA00A5FB5F /* ViewController.m */,
 				181C4D371C1472CB00A5FB5F /* Main.storyboard */,
@@ -660,6 +696,8 @@
 			children = (
 				181C4DAF1C152B9500A5FB5F /* EnterportViewController.h */,
 				181C4DB01C152B9500A5FB5F /* EnterportViewController.m */,
+				188920D61C2A6EA60078DD74 /* EnterpoDeViewController.h */,
+				188920D71C2A6EA60078DD74 /* EnterpoDeViewController.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -667,6 +705,8 @@
 		181C4D651C1475E000A5FB5F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				188920DC1C2A794D0078DD74 /* EnterPoModel.h */,
+				188920DD1C2A794D0078DD74 /* EnterPoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -674,6 +714,8 @@
 		181C4D661C1475E000A5FB5F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				188920D91C2A79280078DD74 /* EnterPoCell.h */,
+				188920DA1C2A79280078DD74 /* EnterPoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -764,6 +806,10 @@
 				1816AE261C1E5E4600036DD1 /* DetailViewController.m */,
 				1816AE381C22522200036DD1 /* ActorDetailViewController.h */,
 				1816AE391C22522200036DD1 /* ActorDetailViewController.m */,
+				188920E81C2D23C60078DD74 /* PhotoViewControl.h */,
+				188920E91C2D23C60078DD74 /* PhotoViewControl.m */,
+				188920EE1C2D3B7E0078DD74 /* PhotoDetailControl.h */,
+				188920EF1C2D3B7E0078DD74 /* PhotoDetailControl.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -793,6 +839,8 @@
 			children = (
 				1816AE281C2043A300036DD1 /* model */,
 				1816AE291C2043A300036DD1 /* view */,
+				189C101B1C3118B10080E3D9 /* MyLayout.h */,
+				189C101C1C3118B10080E3D9 /* MyLayout.m */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -806,6 +854,10 @@
 				181C4E831C1C4B7800A5FB5F /* FXBlurView.m */,
 				180B7FFD1C22971200B17239 /* ActorDetailCell.h */,
 				180B7FFE1C22971200B17239 /* ActorDetailCell.m */,
+				188920EB1C2D28040078DD74 /* PhotoCell.h */,
+				188920EC1C2D28040078DD74 /* PhotoCell.m */,
+				1843D6C51C2FED1D00D8FD2D /* PhotoDetailCell.h */,
+				1843D6C61C2FED1D00D8FD2D /* PhotoDetailCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -825,6 +877,8 @@
 			children = (
 				181C4DA61C152B5800A5FB5F /* MovieViewController.h */,
 				181C4DA71C152B5800A5FB5F /* MovieViewController.m */,
+				189C101E1C32595B0080E3D9 /* WaitshowControl.h */,
+				189C101F1C32595B0080E3D9 /* WaitshowControl.m */,
 				181C4E471C1A654E00A5FB5F /* WaitShowViewController.h */,
 				181C4E481C1A654E00A5FB5F /* WaitShowViewController.m */,
 			);
@@ -1020,6 +1074,8 @@
 		181C4E0C1C19583A00A5FB5F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				188920DF1C2B8D050078DD74 /* SearchModel.h */,
+				188920E01C2B8D050078DD74 /* SearchModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1027,6 +1083,10 @@
 		181C4E0D1C19583A00A5FB5F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				188920E21C2B8D2E0078DD74 /* SearchViewCell.h */,
+				188920E31C2B8D2E0078DD74 /* SearchViewCell.m */,
+				188920E51C2CE4AC0078DD74 /* CollectControlCell.h */,
+				188920E61C2CE4AC0078DD74 /* CollectControlCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1288,10 +1348,12 @@
 				181C4E781C1C1B8900A5FB5F /* SDWebImageDownloaderOperation.m in Sources */,
 				1816AE111C1D5F6100036DD1 /* MJRefreshGifHeader.m in Sources */,
 				181C4E7F1C1C1B8900A5FB5F /* UIImageView+HighlightedWebCache.m in Sources */,
+				1843D6C71C2FED1D00D8FD2D /* PhotoDetailCell.m in Sources */,
 				181C4DA51C1521BB00A5FB5F /* MainViewController.m in Sources */,
 				181C4DA81C152B5800A5FB5F /* MovieViewController.m in Sources */,
 				181C4D9F1C1477AE00A5FB5F /* AFURLSessionManager.m in Sources */,
 				1816AE0A1C1D5F6100036DD1 /* MJRefreshHeader.m in Sources */,
+				188920DB1C2A79280078DD74 /* EnterPoCell.m in Sources */,
 				181C4E7E1C1C1B8900A5FB5F /* UIImage+WebP.m in Sources */,
 				1816AE371C20FF3A00036DD1 /* CollectItem.m in Sources */,
 				188920D21C27A1B40078DD74 /* InDetailViewController.m in Sources */,
@@ -1301,8 +1363,10 @@
 				1816AE2C1C2047D100036DD1 /* FilmCoreDate.xcdatamodeld in Sources */,
 				181C4E7D1C1C1B8900A5FB5F /* UIImage+MultiFormat.m in Sources */,
 				1816AE361C20FF3A00036DD1 /* CollectItem+CoreDataProperties.m in Sources */,
+				188920E11C2B8D050078DD74 /* SearchModel.m in Sources */,
 				1816AE0B1C1D5F6100036DD1 /* MJRefreshAutoGifFooter.m in Sources */,
 				1816AE211C1D617100036DD1 /* SVProgressHUD.m in Sources */,
+				189C10201C32595B0080E3D9 /* WaitshowControl.m in Sources */,
 				1816AE071C1D5F6100036DD1 /* MJRefreshBackFooter.m in Sources */,
 				1816ADC21C1D532300036DD1 /* UIViewController+FlimExtension.m in Sources */,
 				1816ADD51C1D5F1300036DD1 /* UIView+Utils.m in Sources */,
@@ -1316,8 +1380,10 @@
 				181C4D361C1472CA00A5FB5F /* ViewController.m in Sources */,
 				182B17AF1C26463F00C263B7 /* SpecialDetailModel.m in Sources */,
 				181C4E071C1820D400A5FB5F /* Test2ViewController.m in Sources */,
+				189C101D1C3118B10080E3D9 /* MyLayout.m in Sources */,
 				181C4E751C1C1B8900A5FB5F /* SDWebImageCompat.m in Sources */,
 				1816AE091C1D5F6100036DD1 /* MJRefreshFooter.m in Sources */,
+				188920D81C2A6EA60078DD74 /* EnterpoDeViewController.m in Sources */,
 				181C4DFE1C16B96D00A5FB5F /* LeftSlideViewController.m in Sources */,
 				181C4E7C1C1C1B8900A5FB5F /* UIImage+GIF.m in Sources */,
 				1816AE161C1D5F6100036DD1 /* UIScrollView+MJExtension.m in Sources */,
@@ -1330,16 +1396,21 @@
 				181C4E131C19587E00A5FB5F /* SearchViewController.m in Sources */,
 				181C4D7F1C14763400A5FB5F /* ToolUtil.m in Sources */,
 				188CB6DC1C269F54005DBC90 /* InformationModel.m in Sources */,
+				188920DE1C2A794D0078DD74 /* EnterPoModel.m in Sources */,
 				1816AE171C1D5F6100036DD1 /* UIScrollView+MJRefresh.m in Sources */,
 				188CB6D91C269F3B005DBC90 /* InformationCell.m in Sources */,
 				181C4D331C1472CA00A5FB5F /* AppDelegate.m in Sources */,
+				188920F01C2D3B7E0078DD74 /* PhotoDetailControl.m in Sources */,
 				180B80021C229A9B00B17239 /* ActorDetialModel.m in Sources */,
 				181C4DA21C14780200A5FB5F /* HttpRequestHelper.m in Sources */,
+				188920ED1C2D28040078DD74 /* PhotoCell.m in Sources */,
 				1816AE151C1D5F6100036DD1 /* MJRefreshConst.m in Sources */,
 				181C4E871C1C4B8E00A5FB5F /* PagedFlowView.m in Sources */,
 				181C4E3D1C19A44600A5FB5F /* BaseViewController.m in Sources */,
 				1816AE0C1C1D5F6100036DD1 /* MJRefreshAutoNormalFooter.m in Sources */,
 				181C4E811C1C1B8900A5FB5F /* UIView+WebCacheOperation.m in Sources */,
+				188920E41C2B8D2E0078DD74 /* SearchViewCell.m in Sources */,
+				188920EA1C2D23C60078DD74 /* PhotoViewControl.m in Sources */,
 				181C4E491C1A654E00A5FB5F /* WaitShowViewController.m in Sources */,
 				1816AE181C1D5F6100036DD1 /* UIView+MJExtension.m in Sources */,
 				1816AE081C1D5F6100036DD1 /* MJRefreshComponent.m in Sources */,
@@ -1356,6 +1427,7 @@
 				181C4E771C1C1B8900A5FB5F /* SDWebImageDownloader.m in Sources */,
 				1816AE0D1C1D5F6100036DD1 /* MJRefreshAutoStateFooter.m in Sources */,
 				181C4E4C1C1ABBDB00A5FB5F /* MovieModel.m in Sources */,
+				188920E71C2CE4AC0078DD74 /* CollectControlCell.m in Sources */,
 				181C4E731C1C1B8900A5FB5F /* NSData+ImageContentType.m in Sources */,
 				181C4D301C1472CA00A5FB5F /* main.m in Sources */,
 				1816AE101C1D5F6100036DD1 /* MJRefreshBackStateFooter.m in Sources */,

@@ -37,7 +37,7 @@
 }
 -(void)setNav{
     [self addtitleWithName:@"影讯"];
-    [self addUIbarButtonItemWithImage:@"menu@2x" left:YES frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
+    [self addUIbarButtonItemWithImage:@"menu@2x" left:NO frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
     
 }
 - (void)createTableView
@@ -47,6 +47,12 @@
     _tableView.dataSource  = self;
     __weak __typeof(self)weakSelf=self;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.integerIn = 0;
+        [weakSelf reloadDate];
+    }];
+    
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.integerIn +=10;
         [weakSelf reloadDate];
     }];
     [_tableView.mj_header beginRefreshing];
@@ -55,19 +61,27 @@
 - (void)reloadDate
 {
     __weak __typeof(self)weakSelf=self;
+    if (self.integerIn ==0) {
+        [self.dataSoure removeAllObjects];
+    }
     [HttpRequestHelper informationControlWithInteger:_integerIn success:^(id responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSArray *array = responseObject[@"data"][@"feeds"];
             for (NSDictionary *dict in array) {
-                InformationModel *model = [[InformationModel alloc] initWithDict:dict];
-                [weakSelf.dataSoure addObject:model];
+                if ([dict[@"feedType"] isEqualToNumber:@7]) {
+                    InformationModel *model = [[InformationModel alloc] initWithDict:dict];
+                    [weakSelf.dataSoure addObject:model];
+
+                }
             }
         }
         [weakSelf.tableView reloadData];
         [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
     } failure:^(NSError *error) {
         NSLog(@"error=%@",error);
         [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
     }];
 }
 #pragma  mark-UITableView代理协议
@@ -94,7 +108,7 @@
 {
     InformationModel *model = _dataSoure[indexPath.row];
     NSString *string = model.url;
-    
+    NSLog(@"%@",string);
     NSRange range = [string rangeOfString:@"?id="];
     NSString *idS1tring = [string substringFromIndex:range.location+range.length];
     InDetailViewController *detail = [[InDetailViewController alloc] init];

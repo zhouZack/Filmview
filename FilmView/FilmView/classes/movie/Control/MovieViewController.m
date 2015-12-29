@@ -14,6 +14,9 @@
 #import "FXBlurView.h"
 #import "MovieCell.h"
 #import "DetailViewController.h"
+#import "WaitShowViewController.h"
+#import "WaitshowControl.h"
+
 
 @interface MovieViewController ()<UITableViewDelegate,UITableViewDataSource,PagedFlowViewDataSource,PagedFlowViewDelegate>
 
@@ -21,7 +24,11 @@
 @property (nonatomic ,strong)NSMutableArray *dateSource;
 @property (nonatomic ,strong)PagedFlowView  *pageFlowView;
 @property (nonatomic ,strong)FXBlurView     *fxBlurView;
-@property (nonatomic, strong) UIImageView   *blurImageView;
+@property (nonatomic ,strong) UIImageView   *blurImageView;
+@property (nonatomic ,strong)UIScrollView   *baseScrollview;
+
+
+@property (nonatomic ,strong)UISegmentedControl *segmentC;
 
 @end
 
@@ -44,24 +51,35 @@
 
 - (void)setNav{
     [FilmCoreDateHelper share].coreDataName = @"FilmCoreDate";
-    [self addtitleWithName:@"热映"];
-    [self addUIbarButtonItemWithImage:@"menu@2x" left:YES frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
-    [self addUIbarButtonItemWithName:@"待映" left:NO frame:CGRectMake(0, 0, 40, 40) target:self action:@selector(comeWaitShow)];
+    _segmentC = [[UISegmentedControl alloc] initWithItems:@[@"热映",@"待映"]];
+    _segmentC.size = CGSizeMake(UIScreenWidth/3, 25);
+    NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:16]};
+    [_segmentC setTitleTextAttributes:dict forState:UIControlStateNormal];
+    _segmentC.tintColor = [UIColor whiteColor];
+    _segmentC.selectedSegmentIndex = 0;
+    [_segmentC addTarget:self action:@selector(changeTypePrice:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = _segmentC;
+    [self addUIbarButtonItemWithImage:@"menu@2x" left:NO frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
+
     
     
 }
-
+- (void)changeTypePrice:(id)info
+{
+    if (_segmentC.selectedSegmentIndex == 0) {
+        _baseScrollview.contentOffset = CGPointMake(0, 0);
+    }else{
+        _baseScrollview.contentOffset = CGPointMake(UIScreenWidth, 0);
+    }
+}
 - (void)reloadDate{
     
     [self.dateSource removeAllObjects];
-    
     [HttpRequestHelper moveControlRequestSuccess:^(id responseObject) {
         NSArray *array = responseObject[@"data"][@"hot"][0][@"movies"];
         for (NSDictionary *dict in array) {
             MovieModel *model = [[MovieModel alloc] initWithDict:dict];
             [self.dateSource addObject:model];
-           
-            
         }
         [_tableView reloadData];
         [_tableView.mj_header endRefreshing];
@@ -71,13 +89,18 @@
         [_tableView.mj_header endRefreshing];
  
     }];
-    
-    
-    
+ 
 }
 
 - (void)createTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-108) style:UITableViewStylePlain];
+    
+    _baseScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-113)];
+    _baseScrollview.scrollEnabled = NO;
+    _baseScrollview.contentSize = CGSizeMake(2*UIScreenWidth, 0);
+    _baseScrollview.pagingEnabled = YES;
+    [self.view addSubview:_baseScrollview];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-113) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -87,22 +110,28 @@
     }];
     
     [self.tableView.mj_header beginRefreshing];
-    [self.view addSubview:_tableView];
-   
+    [_baseScrollview addSubview:_tableView];
+    
+    WaitshowControl *waitShow = [[WaitshowControl alloc] initWithFrame:CGRectMake(UIScreenWidth, 0, UIScreenWidth, UIScreenHeight-113)];
+    waitShow.block = ^(NSString*string){
+         DetailViewController *detal = [[DetailViewController alloc] init];
+        detal.myId = string;
+        [self.navigationController pushViewController:detal animated:YES];
+    };
+    
+    [_baseScrollview addSubview:waitShow];
+
 }
 - (void)change{
     [_pageFlowView removeFromSuperview];
     _pageFlowView = nil;
     [self createTableView];
 }
-- (void)comeWaitShow{
-    
-    [self.navigationController pushViewController:[[WaitShowViewController alloc] init] animated:YES];
-}
+
 - (void)changeLeft
 {
     [self changeLeftList];
-    [_tableView reloadData];
+    
 }
 
 #pragma mark-UITableView代理
@@ -171,7 +200,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DetailViewController *detail = [[DetailViewController alloc] init];
-    
     
     MovieModel *model = _dateSource[indexPath.row-1];
     detail.myId = model.myId;

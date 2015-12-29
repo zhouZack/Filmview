@@ -35,7 +35,7 @@
 }
 - (void)setNav{
     [self addtitleWithName:@"专题"];
-    [self addUIbarButtonItemWithImage:@"menu@2x" left:YES frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
+    [self addUIbarButtonItemWithImage:@"menu@2x" left:NO frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
 }
 -(void)changeLeft{
     [self changeLeftList];

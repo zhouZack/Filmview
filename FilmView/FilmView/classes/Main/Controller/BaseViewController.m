@@ -33,7 +33,7 @@
     if (left == YES) {
         self.navigationItem.leftBarButtonItem = item;
     }else{
-        self.navigationController.navigationItem.rightBarButtonItem = item;
+        self.navigationItem.rightBarButtonItem = item;
     }
 }
 - (void)addUIbarButtonItemWithName:(NSString *)name left:(BOOL)left frame:(CGRect)frame target:(id)target action:(SEL)action{

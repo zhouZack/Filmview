@@ -106,13 +106,13 @@
 - (void)openLeftView
 {
     [UIView beginAnimations:nil context:nil];
-    self.mainVC.view.center = kMainPageCenter;
+    self.mainVC.view.center = kMainPageCenterRight;
     self.mainVC.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, kMainPageScale, kMainPageScale);
     _scalef = 0;
     self.closed = NO;
     
     self.tableView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
-    self.tableView.center = CGPointMake((UIScreenWidth-kMainPageDistance)/2, UIScreenHeight/2);
+    self.tableView.center = CGPointMake(kMainPageDistance+(UIScreenWidth-kMainPageDistance)/2, UIScreenHeight/2);
     
     self.containView.alpha = 0;
     [UIView commitAnimations];

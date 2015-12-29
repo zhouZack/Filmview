@@ -59,7 +59,19 @@ typedef void(^HttpFailureBlcok) (NSError *error);
  */
 + (void)informationDetailWithMyId:(NSString*)myId success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
 
-
+/**
+ 片库界面数据
+ */
++(void)enterPortDetailWithParameter1:(NSString*)parameter1 Parameter2:(NSString*)parameter2 Parameter3:(NSInteger)parameter3 MyId:(NSInteger)MyId success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
+/**
+ 搜索界面数据请求
+ http://api.maoyan.com/mmdb/search/movie/keyword/list.json?&keyword=%@
+ */
++(void)searchControlWithName:(NSString*)name success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
+/**
+ 图片界面数据请求
+ */
++(void)photoControlWithMyId:(NSString*)myId success:(HttpSuccessBlock)success failure:(HttpFailureBlcok)failure;
 
 
 

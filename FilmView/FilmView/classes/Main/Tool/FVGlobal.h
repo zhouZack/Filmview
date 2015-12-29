@@ -18,7 +18,8 @@
 #define IOSVersion(_version) ([[[UIDevice currentDevice] systemVersion] doubleValue] >= _version)
 #define UIScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define UIScreenHeight [[UIScreen mainScreen] bounds].size.height
-//叶显进 352129195406090011
+#define kRatio [[UIScreen mainScreen] bounds].size.width/320
+
 
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
 

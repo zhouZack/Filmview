@@ -25,5 +25,9 @@
 +(UILabel *)labelwithFrame:(CGRect)frame font:(CGFloat)font text:(NSString*)text color:(UIColor*)color;
 
 + (UIButton *)buttonWithSize:(CGSize)size title:(NSString *)title selectTitle:(NSString *)selectTitle layer:(BOOL)layer target:(id)target action:(SEL)action;
+//定义UIBarBUtton
++(UIBarButtonItem*)barButtonWithImage:(NSString*)image frame:(CGRect)frame left:(BOOL)left target:(id)taget action:(SEL)action;
+//图片转换
 +(NSString*)changeImageStringWith:(NSString*)str;
++ (NSString*)changeDeleteImageStringWith:(NSString*)str;
 @end
