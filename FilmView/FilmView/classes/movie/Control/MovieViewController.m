@@ -16,7 +16,7 @@
 #import "DetailViewController.h"
 #import "WaitShowViewController.h"
 #import "WaitshowControl.h"
-
+#import "StarView.h"
 
 @interface MovieViewController ()<UITableViewDelegate,UITableViewDataSource,PagedFlowViewDataSource,PagedFlowViewDelegate>
 
@@ -142,14 +142,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        return 300;
+        return UIScreenHeight-113;
     }else{
         return 118;
     }
     
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     
     if (indexPath.row == 0) {
         static NSString *cellId = @"cellId";
@@ -160,7 +159,7 @@
         }
         [_pageFlowView removeFromSuperview];
         _pageFlowView = nil;
-        _pageFlowView = [[PagedFlowView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, 300)];
+        _pageFlowView = [[PagedFlowView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-113)];
         _pageFlowView.delegate = self;
         _pageFlowView.dataSource = self;
         _pageFlowView.minimumPageAlpha = 0.9;//左右视图的透明度
@@ -174,13 +173,13 @@
         _blurImageView = [[UIImageView alloc] initWithFrame:_pageFlowView.frame];
         _blurImageView.clipsToBounds = YES;
         _blurImageView.contentMode = UIViewContentModeScaleAspectFill;
-//        [blurView addSubview:_blurImageView];
+        [blurView addSubview:_blurImageView];
         
         _fxBlurView = [[FXBlurView alloc] initWithFrame:_blurImageView.frame];//玻璃效果
         _fxBlurView.dynamic = YES;
         _fxBlurView.blurRadius = 20;
         _fxBlurView.tintColor = [UIColor clearColor];
-//        [blurView addSubview:_fxBlurView];
+        [blurView addSubview:_fxBlurView];
         [_pageFlowView sendSubviewToBack:blurView];//设置blurView为最底层的view；
         
         return cell;
@@ -199,6 +198,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == 0) return;
+    
     DetailViewController *detail = [[DetailViewController alloc] init];
     
     MovieModel *model = _dateSource[indexPath.row-1];
@@ -206,7 +208,9 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 -(CGSize)sizeForPageInFlowView:(PagedFlowView *)flowView{
-    return CGSizeMake(210, 300);
+    CGFloat width = UIScreenWidth*210/375;
+    CGFloat heigth = UIScreenHeight*400/667;
+    return CGSizeMake(width, heigth);
 }
 - (void)flowView:(PagedFlowView *)flowView didScrollToPageAtIndex:(NSInteger)index
 {
@@ -216,8 +220,11 @@
 }
 - (void)flowView:(PagedFlowView *)flowView didTapPageAtIndex:(NSInteger)index {
     
+    DetailViewController*detail = [[DetailViewController alloc] init];
+    MovieModel *model = _dateSource[index];
+    detail.myId = model.myId;
+    [self.navigationController pushViewController:detail animated:YES];
     
-
 }
 #pragma mark - PagedFlowView Datasource
 //返回显示View的个数
@@ -226,6 +233,9 @@
 }
 //返回给某列使用的View,这个View的大小由上面的方法设定
 - (UIView *)flowView:(PagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index {
+    
+    MovieModel *model = _dateSource[index];
+    
     
     UIView *view = (UIView *)[flowView dequeueReusableCell];
     
@@ -239,9 +249,11 @@
     
     // 图片
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180, 252)]; // 图片原分辨率是200*280
-    imageView.center = CGPointMake([self sizeForPageInFlowView:flowView].width/2, [self sizeForPageInFlowView:flowView].height/2-20);
+    imageView.top = 0;
+    imageView.centerX = [self sizeForPageInFlowView:flowView].width/2;
+//    imageView.center = CGPointMake([self sizeForPageInFlowView:flowView].width/2,[self sizeForPageInFlowView:flowView].height/2-20);
     imageView.tag = 1000 + index;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[self.dateSource[index] img]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [imageView sd_setImageWithURL:[NSURL URLWithString:model.img] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (index == 0) {
             _blurImageView.image = image;
         }
@@ -251,11 +263,90 @@
     
     // 片名
     UILabel *movieTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self sizeForPageInFlowView:flowView].width, 20)];
-    
-    movieTitleLabel.center = CGPointMake(100, [self sizeForPageInFlowView:flowView].height - movieTitleLabel.bounds.size.height);
+    movieTitleLabel.top = imageView.bottom+15;
+    movieTitleLabel.centerX = imageView.centerX;
     movieTitleLabel.textAlignment = NSTextAlignmentCenter;
-    movieTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:[self.dateSource[index] nm] attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor colorWithRed:1 green:0.53 blue:0 alpha:1]}];
+    movieTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:model.nm attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor colorWithRed:1 green:0.53 blue:0 alpha:1]}];
     [view addSubview:movieTitleLabel];
+    
+    UILabel *englishName = [[UILabel alloc] initWithFrame:movieTitleLabel.bounds];
+    englishName.top = movieTitleLabel.bottom+5;
+    englishName.centerX = movieTitleLabel.centerX;
+    englishName.textAlignment = NSTextAlignmentCenter;
+    englishName.attributedText = [[NSAttributedString alloc] initWithString:@"while detail code" attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:15],NSForegroundColorAttributeName:[UIColor colorWithWhite:0.6 alpha:1]}];
+    [view addSubview:englishName];
+    
+    UIImageView *quetaImageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.left , englishName.bottom, 10, 9)];
+    quetaImageView.image = [UIImage imageNamed:@"v10_quot"];
+    [view addSubview:quetaImageView];
+    
+    UILabel*scmLabel = [[UILabel alloc] init];//简介
+    scmLabel.top =quetaImageView.top;
+    scmLabel.left = quetaImageView.right;
+    scmLabel.attributedText = [[NSAttributedString alloc] initWithString:model.scm attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor colorWithRed:1 green:0.53 blue:0 alpha:1]}];
+    [scmLabel sizeToFit];
+    [view addSubview:scmLabel];
+    
+    NSString *dateStr = [NSString stringWithFormat:@"%@月%@日上映/%@分钟", [model.rt substringWithRange:NSMakeRange(5, 2)], [model.rt substringWithRange:NSMakeRange(8, 2)], model.dur];
+    
+    UILabel * timeLabel = [[UILabel alloc] init];
+    timeLabel.top = scmLabel.bottom;
+    timeLabel.left = quetaImageView.left;
+    timeLabel.attributedText = [[NSAttributedString alloc] initWithString:dateStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15],NSForegroundColorAttributeName:[UIColor colorWithWhite:0.6 alpha:1]}];
+    [timeLabel sizeToFit];
+    [view addSubview:timeLabel];
+    
+    UILabel *actor = [[UILabel alloc] init];
+    actor.top = timeLabel.bottom;
+    actor.left = timeLabel.left;
+    [view addSubview:actor];
+    if (model.star) {
+        NSMutableString *actorStr = [NSMutableString stringWithString:model.star];
+        [actorStr replaceOccurrencesOfString:@"," withString:@"/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, model.star.length)];
+        actor.attributedText = [[NSAttributedString alloc] initWithString:actorStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15],NSForegroundColorAttributeName:[UIColor colorWithWhite:0.6 alpha:1]}];
+        [actor sizeToFit];
+        
+    }
+    
+    
+    /*
+     
+     @property (nonatomic ,copy)NSString   *nm;//名字
+     @property (nonatomic ,assign)double    mk;//评分
+     @property (nonatomic ,copy)NSString   *scm;//简介
+     @property (nonatomic ,copy)NSString   *rt;//上映时间
+     @property (nonatomic ,copy)NSString   *dur;//影片时长
+     @property (nonatomic ,copy)NSString   *star;//明星
+     @property (nonatomic ,copy)NSString   *img;//图片
+     //@property (nonatomic ,strong,setter =setId:)NSNumber *myId;
+     @property (nonatomic ,copy)NSString   *myId;
+     @property (nonatomic ,copy)NSString   *ver;//3D／2D／IMAX
+     
+     
+     @property (nonatomic ,copy)NSString   *snum;//评论人数
+
+     */
+    
+    StarView *starView = [[StarView alloc] initWithFrame:CGRectMake(actor.left, actor.bottom+5, 90, 15)];
+    [starView setStarView:model.mk];
+//    starView.backgroundColor = [UIColor cyanColor];
+    [view addSubview:starView];
+    
+    UILabel *integerLabel = [[UILabel alloc] init];//评分整数部分
+    integerLabel.top = actor.bottom;
+    integerLabel.left = starView.right;
+    integerLabel.attributedText = [[NSAttributedString alloc] initWithString:[[NSString stringWithFormat:@"%f",model.mk] substringToIndex:1] attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:24],NSForegroundColorAttributeName:[UIColor colorWithRed:99/255.0 green:154/255.0 blue:30/255.0 alpha:1.000]}];
+    [integerLabel sizeToFit];
+    [view addSubview:integerLabel];
+    
+    UILabel *decimalLabel = [[UILabel alloc] init];//评分小数部分
+    decimalLabel.top = integerLabel.top+5;
+    decimalLabel.left = integerLabel.right;
+    decimalLabel.attributedText = [[NSAttributedString alloc] initWithString:[[[NSString stringWithFormat:@"%f",model.mk] substringFromIndex:1] substringToIndex:2]  attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18],NSForegroundColorAttributeName:[UIColor colorWithRed:99/255.0 green:154/255.0 blue:30/255.0 alpha:1.000]}];
+    [decimalLabel sizeToFit];
+    [view addSubview:decimalLabel];
+    
+//    view.backgroundColor  = [[UIColor cyanColor] colorWithAlphaComponent:0.3];
     
     return view;
 }
