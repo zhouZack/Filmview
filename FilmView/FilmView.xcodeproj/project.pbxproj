@@ -167,6 +167,11 @@
 		188CB6DC1C269F54005DBC90 /* InformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188CB6DB1C269F54005DBC90 /* InformationModel.m */; };
 		189C101D1C3118B10080E3D9 /* MyLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C101C1C3118B10080E3D9 /* MyLayout.m */; };
 		189C10201C32595B0080E3D9 /* WaitshowControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C101F1C32595B0080E3D9 /* WaitshowControl.m */; };
+		18F616D91C337B370077FA75 /* StarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F616D81C337B370077FA75 /* StarView.m */; };
+		18F616DE1C337FA80077FA75 /* star_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F616DA1C337FA80077FA75 /* star_normal@2x.png */; };
+		18F616DF1C337FA80077FA75 /* star_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F616DB1C337FA80077FA75 /* star_normal@3x.png */; };
+		18F616E01C337FA80077FA75 /* star_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F616DC1C337FA80077FA75 /* star_press@2x.png */; };
+		18F616E11C337FA80077FA75 /* star_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F616DD1C337FA80077FA75 /* star_press@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -453,6 +458,12 @@
 		189C101C1C3118B10080E3D9 /* MyLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLayout.m; sourceTree = "<group>"; };
 		189C101E1C32595B0080E3D9 /* WaitshowControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitshowControl.h; sourceTree = "<group>"; };
 		189C101F1C32595B0080E3D9 /* WaitshowControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitshowControl.m; sourceTree = "<group>"; };
+		18F616D71C337B370077FA75 /* StarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarView.h; sourceTree = "<group>"; };
+		18F616D81C337B370077FA75 /* StarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarView.m; sourceTree = "<group>"; };
+		18F616DA1C337FA80077FA75 /* star_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_normal@2x.png"; sourceTree = "<group>"; };
+		18F616DB1C337FA80077FA75 /* star_normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_normal@3x.png"; sourceTree = "<group>"; };
+		18F616DC1C337FA80077FA75 /* star_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_press@2x.png"; sourceTree = "<group>"; };
+		18F616DD1C337FA80077FA75 /* star_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_press@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,6 +605,8 @@
 		1816AE291C2043A300036DD1 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				18F616D71C337B370077FA75 /* StarView.h */,
+				18F616D81C337B370077FA75 /* StarView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1109,6 +1122,10 @@
 		181C4E3A1C19795600A5FB5F /* Star */ = {
 			isa = PBXGroup;
 			children = (
+				18F616DA1C337FA80077FA75 /* star_normal@2x.png */,
+				18F616DB1C337FA80077FA75 /* star_normal@3x.png */,
+				18F616DC1C337FA80077FA75 /* star_press@2x.png */,
+				18F616DD1C337FA80077FA75 /* star_press@3x.png */,
 			);
 			path = Star;
 			sourceTree = "<group>";
@@ -1276,11 +1293,14 @@
 				181C4E211C19793100A5FB5F /* icon_clear@3x.png in Resources */,
 				181C4DFB1C15774700A5FB5F /* tab_libraryH@3x.png in Resources */,
 				181C4DDB1C15774700A5FB5F /* tab_accountH.png in Resources */,
+				18F616E01C337FA80077FA75 /* star_press@2x.png in Resources */,
 				181C4E341C19794E00A5FB5F /* icon_hot_show_DMAX@2x.png in Resources */,
 				181C4E321C19794E00A5FB5F /* icon_hot_show_3D@2x.png in Resources */,
 				181C4DE11C15774700A5FB5F /* tab_cinemaH.png in Resources */,
+				18F616DF1C337FA80077FA75 /* star_normal@3x.png in Resources */,
 				181C4E281C19793A00A5FB5F /* placeholder.jpg in Resources */,
 				181C4E261C19793100A5FB5F /* line_vertical@2x.png in Resources */,
+				18F616E11C337FA80077FA75 /* star_press@3x.png in Resources */,
 				181C4DE31C15774700A5FB5F /* tab_cinemaH@3x.png in Resources */,
 				181C4DE41C15774700A5FB5F /* tab_event.png in Resources */,
 				181C4E241C19793100A5FB5F /* blue_back@3x.png in Resources */,
@@ -1293,6 +1313,7 @@
 				181C4E221C19793100A5FB5F /* blue_back.png in Resources */,
 				181C4D3B1C1472CB00A5FB5F /* Assets.xcassets in Resources */,
 				181C4E1F1C19793100A5FB5F /* menu@2x.png in Resources */,
+				18F616DE1C337FA80077FA75 /* star_normal@2x.png in Resources */,
 				181C4E201C19793100A5FB5F /* icon_clear@2x.png in Resources */,
 				181C4DED1C15774700A5FB5F /* tab_homeH.png in Resources */,
 				181C4DEF1C15774700A5FB5F /* tab_homeH@3x.png in Resources */,
@@ -1353,6 +1374,7 @@
 				181C4DA81C152B5800A5FB5F /* MovieViewController.m in Sources */,
 				181C4D9F1C1477AE00A5FB5F /* AFURLSessionManager.m in Sources */,
 				1816AE0A1C1D5F6100036DD1 /* MJRefreshHeader.m in Sources */,
+				18F616D91C337B370077FA75 /* StarView.m in Sources */,
 				188920DB1C2A79280078DD74 /* EnterPoCell.m in Sources */,
 				181C4E7E1C1C1B8900A5FB5F /* UIImage+WebP.m in Sources */,
 				1816AE371C20FF3A00036DD1 /* CollectItem.m in Sources */,
