@@ -107,6 +107,9 @@
     }
     SepcialTopicModel *model = _dateSource[indexPath.row];
     [cell config:model];
+    if (indexPath.row ==0) {
+        NSLog(@"title=%@",model.summary);
+    }
     __weak __typeof(self)weakSelf = self;
     cell.block = ^(NSString*str)
     {
@@ -114,6 +117,7 @@
         ctrl.myId = str;
         [weakSelf.navigationController pushViewController:ctrl animated:YES];
     };
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
 }
@@ -122,6 +126,7 @@
     SpecialDetailViewController *detail = [[SpecialDetailViewController alloc] init];
     SepcialTopicModel*model = _dateSource[indexPath.row];
     detail.topicId = model.myId;
+    
     [self.navigationController pushViewController:detail animated:YES];
     
 }

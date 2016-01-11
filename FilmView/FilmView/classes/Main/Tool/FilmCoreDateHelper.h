@@ -20,7 +20,7 @@
 +(instancetype)share;
 
 
-- (void)logNm;
+//- (void)logNm;
 //插入数据
 - (void)insertCoreData:(NSMutableDictionary*)dict;
 //查询
@@ -31,5 +31,6 @@
 - (BOOL)searchDataWith:(NSString*)string;
 //更新
 - (void)updateData:(NSString*)newsId withIsLook:(NSString*)islook;
+
 
 @end

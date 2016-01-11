@@ -8,7 +8,6 @@
 
 #import "FilmCoreDateHelper.h"
 #import "CollectItem.h"
-
 @implementation FilmCoreDateHelper
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -170,7 +169,11 @@
     
 }
 
-
+//更新
+- (void)updateData:(NSString*)newsId withIsLook:(NSString*)islook
+{
+    
+}
 
 
 

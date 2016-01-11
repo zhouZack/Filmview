@@ -120,6 +120,7 @@
 }
 - (void)closedLeftView
 {
+    [self.tableView reloadData];
     [UIView beginAnimations:nil context:nil];
     self.mainVC.view.center = CGPointMake(self.view.centerX, self.view.centerY);
     self.mainVC.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);

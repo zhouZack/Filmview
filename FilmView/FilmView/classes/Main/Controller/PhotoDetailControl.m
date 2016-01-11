@@ -9,7 +9,7 @@
 #import "PhotoDetailControl.h"
 #import "PhotoCell.h"
 #import "PhotoDetailCell.h"
-
+#import "MainViewController.h"
 @interface PhotoDetailControl ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic ,strong)UITableView *tableView;
 
@@ -23,6 +23,7 @@
     self.view.backgroundColor = [UIColor blackColor];
 
     self.navigationItem.hidesBackButton = YES;
+    self.edgesForExtendedLayout = UIRectEdgeBottom;
     self.navigationItem.leftBarButtonItem = [ToolUtil barButtonWithImage:@"icon_clear@2x" frame:CGRectMake(0, 0, 40, 40) left:YES target:self action:@selector(BackBtnClick)];
     self.navigationController.navigationBarHidden =YES;
 
@@ -33,23 +34,24 @@
     [self.view addSubview:btn];
     
 }
-- (void)BackBtnClick
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-    self.tabBarController.tabBar.hidden =YES;
+    MainViewController *tab = (MainViewController*)self.tabBarController;
+    [tab hideTabBar];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBarTintColor:RGBColor(42, 162, 239)];
-    self.navigationController.navigationBarHidden = NO;
-     self.tabBarController.tabBar.hidden =NO;
+    MainViewController *tab = (MainViewController*)self.tabBarController;
+    [tab showTabBar];
+    self.navigationController.navigationBarHidden =NO;
 }
+- (void)BackBtnClick
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)createtableView
 {
     NSLog(@"%ld",self.dateSource.count);

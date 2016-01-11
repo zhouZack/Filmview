@@ -29,11 +29,14 @@
     MovieViewController*move = [[MovieViewController alloc] init];
     [self addChildWith:move image:@"tab_home@3x" selectImage:@"tab_homeH@3x" title:@"电影"];
     
-    InformationViewController *information = [[InformationViewController alloc] init];
-    [self addChildWith:information image:@"tab_cinema@3x" selectImage:@"tab_cinemaH@3x" title:@"影讯"];
     
     SpecialTopicViewController *sepcial = [[SpecialTopicViewController alloc] init];
     [self addChildWith:sepcial image:@"tab_event@3x" selectImage:@"tab_eventH@3x" title:@"专题"];
+    
+    InformationViewController *information = [[InformationViewController alloc] init];
+    [self addChildWith:information image:@"tab_cinema@3x" selectImage:@"tab_cinemaH@3x" title:@"影讯"];
+    
+    
     
     EnterportViewController *enter = [[EnterportViewController alloc] init];
     [self addChildWith:enter image:@"tab_library@3x" selectImage:@"tab_libraryH@3x" title:@"片库"];
@@ -50,8 +53,8 @@
     _tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, UIScreenHeight-49, UIScreenWidth, 49)];
     _tabBarView.backgroundColor = [UIColor whiteColor];
     
-    NSArray *imageArr = @[@"tab_home@3x",@"tab_cinema@3x",@"tab_event@3x",@"tab_library@3x"];
-    
+//    NSArray *imageArr = @[@"tab_home@3x",@"tab_cinema@3x",@"tab_event@3x",@"tab_library@3x"];
+    NSArray *imageArr = @[@"movie1@2x",@"movie2@2x",@"movie3@2x",@"movie4@2x"];
     NSArray *titleArr = @[@"电影",@"影讯",@"专题",@"片库"];
     CGFloat width = UIScreenWidth/4;
     for (int i =0; i<imageArr.count; i++) {
@@ -74,8 +77,8 @@
         self.selectedIndex = 0;
         
         if (i == 0) {
-            imageV.image = [UIImage imageNamed:@"tab_homeH@3x"];
-            labelL.textColor = [UIColor blueColor];
+            imageV.image = [UIImage imageNamed:@"movieSelect1@2x"];
+            labelL.textColor = [UIColor colorWithRed:249/255.0f green:212/255.0f blue:9/255.0f alpha:1];
         }
     }
     [self.view addSubview:_tabBarView];
@@ -83,23 +86,22 @@
 }
 - (void)tabBarButtonClick:(UIButton *)button
 {
-    NSArray *imageArr = @[@"tab_home@3x",@"tab_cinema@3x",@"tab_event@3x",@"tab_library@3x"];
-    NSArray *selectImageArr =@[@"tab_homeH@3x",@"tab_cinemaH@3x",@"tab_eventH@3x",@"tab_libraryH@3x"];
-//    NSLog(@"%ld",self.selectedIndex);
+
+    NSArray *imageArr = @[@"movie1@2x",@"movie2@2x",@"movie3@2x",@"movie4@2x"];
+    NSArray *selectImageArr =@[@"movieSelect1@2x",@"movieSelect2@2x",@"movieSelect3@2x",@"movieSelect4@2x"];
+
     NSInteger num = button.tag-20;
-    NSLog(@"%ld",num);
+
     UIImageView *lastImageView = (UIImageView*)[_tabBarView viewWithTag:30+self.selectedIndex];
     lastImageView.image = [UIImage imageNamed:imageArr[self.selectedIndex]];
     
     UILabel * lastLabel = (UILabel*)[_tabBarView viewWithTag:40+self.selectedIndex];
     lastLabel.textColor = [UIColor colorWithRed:123/255.0f green:123/255.0f blue:123/255.0f alpha:1];
-    NSLog(@"%@",lastLabel.text);
-    
-    
+
     UIImageView *imageViewCurrent = (UIImageView*)[button viewWithTag:num+30];
     imageViewCurrent.image = [UIImage imageNamed:selectImageArr[num]];
     UILabel *labelCurrent = (UILabel *)[button viewWithTag:num+40];
-    labelCurrent.textColor = [UIColor blueColor];
+    labelCurrent.textColor = [UIColor colorWithRed:249/255.0f green:212/255.0f blue:9/255.0f alpha:1];
     self.selectedIndex = num;
     
 }

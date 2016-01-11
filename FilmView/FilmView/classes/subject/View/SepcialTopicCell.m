@@ -58,6 +58,8 @@
         [imageView addGestureRecognizer:tapGesture];
         
         [imageView sd_setImageWithURL:[NSURL URLWithString:topicModel.img] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        imageView.layer.cornerRadius = 15;
+        imageView.clipsToBounds = YES;
         UILabel* label = [ToolUtil labelWithFrame:CGRectMake(imageView.left, imageView.bottom+5, width, 20) font:13 color:[UIColor colorWithWhite:0.4 alpha:1] Alignment:NSTextAlignmentCenter text:topicModel.nm];
         [_scrollView addSubview:imageView];
         [_scrollView addSubview:label];

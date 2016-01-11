@@ -30,4 +30,5 @@
 //图片转换
 +(NSString*)changeImageStringWith:(NSString*)str;
 + (NSString*)changeDeleteImageStringWith:(NSString*)str;
++ (CGSize)labelAutoCalculateRectWith:(NSString*)text font:(UIFont*)font maxSize:(CGSize)maxSize;
 @end

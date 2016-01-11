@@ -10,13 +10,16 @@
 #import "InformationCell.h"
 #import "InformationModel.h"
 #import "InDetailViewController.h"
+#import "FilmCycleScrollView.h"
 
-@interface InformationViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface InformationViewController ()<UITableViewDataSource,UITableViewDelegate,FilmCycleScrollViewDelegate>
 
 @property (nonatomic ,strong)UITableView    *tableView;
 @property (nonatomic ,strong)NSMutableArray *dataSoure;
 
 @property (nonatomic ,assign)NSInteger integerIn;
+@property (nonatomic ,strong)FilmCycleScrollView *headerScrollV;
+
 @end
 
 @implementation InformationViewController
@@ -84,10 +87,42 @@
         [weakSelf.tableView.mj_footer endRefreshing];
     }];
 }
+
+//- (void)setHeaderViewSource
+//{
+//    
+//}
 #pragma  mark-UITableView代理协议
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _dataSoure.count;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 150;
+}
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    _headerScrollV = [[FilmCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, 150)];
+    _headerScrollV.delegate = self;
+    NSMutableArray *imageArray = [[NSMutableArray alloc] init];
+    if (_dataSoure!=nil) {
+        for (int i = 0; i<3 ; i++) {
+            InformationModel *model  = _dataSoure[i];
+            NSDictionary*dict = model.images[1];
+            [imageArray addObject:dict[@"url"]];
+            
+        }
+        [_headerScrollV setImageUrlNames:imageArray];
+
+    }
+    
+    return _headerScrollV;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -100,6 +135,8 @@
     if (cell  ==nil) {
         cell = [[InformationCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     InformationModel *model  = _dataSoure[indexPath.row];
     [cell configWithModel:model];
     return cell;
@@ -120,10 +157,26 @@
 - (void)changeLeft{
     [self changeLeftList];
 }
+
+#pragma mark-Film代理协议
+-(void)cycleScrollView:(FilmCycleScrollView *)cycleScrollView DidTapImageView:(NSInteger)index
+{
+    InformationModel *model = _dataSoure[index];
+    NSString *string = model.url;
+    NSLog(@"%@",string);
+    NSRange range = [string rangeOfString:@"?id="];
+    NSString *idS1tring = [string substringFromIndex:range.location+range.length];
+    InDetailViewController *detail = [[InDetailViewController alloc] init];
+    
+    detail.myId = idS1tring;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

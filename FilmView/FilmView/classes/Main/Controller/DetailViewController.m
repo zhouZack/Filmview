@@ -9,15 +9,28 @@
 #import "DetailViewController.h"
 #import "ActorDetailViewController.h"
 #import "PhotoViewControl.h"
-
-@interface DetailViewController ()
+#import "MainViewController.h"
+#import "StarView.h"
+#import "PhotoCell.h"
+#import "PhotoDetailControl.h"
+#import "MyLayout.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import "ViewController.h"
+@interface DetailViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,MyLayoutDelegate>
 
 @property (nonatomic ,strong)UIView       *upView;
+@property (nonatomic ,strong)UIView    *bgImageview;//电影图片
 @property (nonatomic ,strong)UIScrollView *scrollView;
 @property (nonatomic ,strong)UILabel *separateLabel;//第一条分割线
 @property (nonatomic ,strong)UILabel *separateLabel2;//第一条分割线
 @property (nonatomic ,assign)BOOL Consequence;//判断是否被收藏
+@property (nonatomic ,assign)BOOL showScrollView;//判断是否显示ScrollView
 @property (nonatomic ,strong)UIButton *saveBtn;
+@property (nonatomic ,strong)MPMoviePlayerViewController *moviePlayer;
+@property (nonatomic ,strong)UIImageView *downImageView;
+
+
 //数据
 /**
  简介
@@ -31,6 +44,12 @@
 @property (nonatomic ,strong)NSMutableArray *actorAndDirectorArray;//保存演员和导演图片中英文名字
 @property (nonatomic ,strong)NSMutableArray *actorArray;
 @property (nonatomic ,strong)NSMutableArray *directorArray;
+/**
+ collectionView
+ */
+@property (nonatomic ,strong)UICollectionView *collectionView;
+@property (nonatomic ,strong)NSMutableArray *dateSourceCollection;
+@property (nonatomic ,strong)NSMutableArray *heightArr;//保存cell高度的数组
 
 @end
 
@@ -63,126 +82,284 @@
     }
     return _actorAndDirectorArray;
 }
+- (NSMutableArray*)dateSourceCollection
+{
+    if (_dateSourceCollection ==nil) {
+        _dateSourceCollection = [[NSMutableArray alloc] init];
+    }
+    return _dateSourceCollection;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    MainViewController *tab = (MainViewController*)self.tabBarController;
+    [tab hideTabBar];
 
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    MainViewController *tab = (MainViewController*)self.tabBarController;
+    [tab showTabBar];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setNav];
+    self.edgesForExtendedLayout = UIRectEdgeBottom;
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-108)];
-    _scrollView.contentSize = CGSizeMake(0, 2*UIScreenHeight);
-    _scrollView.bounces = NO;
-    [self.view addSubview:_scrollView];
-    [self reloadDescriptionData];
+    [self setNav];
+    [self setDownView];
+    [self setUpScrollView];
+    
 }
 - (void)setNav
 {
-    [self addtitleWithName:self.moedel.nm];
-    [self addUIbarButtonItemWithName:@"分享" left:NO frame:CGRectMake(0, 0, 40, 40) target:self action:@selector(shareBtn)];
+    self.navigationItem.hidesBackButton = YES;
+    [self addUIbarButtonItemWithImage:@"back@2x" left:YES frame:CGRectMake(0, 0, 15, 25) target:self action:@selector(backClick:)];
     
-}
-- (void)createView{
-    
-    _upView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, 250)];
-    _upView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.5];
-    [_scrollView addSubview:_upView];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 120, 170)];
-    NSString *img = [ToolUtil changeImageStringWith:self.dictDate[@"img"]];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:img] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    [_upView addSubview:imageView];
-    
-    _saveBtn = [ToolUtil buttonWithSize:CGSizeMake(170, 35) title:@"收藏" selectTitle:@"已收藏" layer:YES target:self action:@selector(reserveBtn:)];
-    _saveBtn.centerX = UIScreenWidth/2;
-    _saveBtn.top = imageView.bottom+15;
+    [self addUIbarButtonItemWithName:@"收藏" left:NO frame:CGRectMake(0, 0, 60, 40) target:self action:@selector(reserveBtn:)];
     _Consequence = [[FilmCoreDateHelper share] searchDataWith:self.myId];
     if (self.Consequence == YES) {
-        _saveBtn.selected =YES;
+        UIButton*btn = (UIButton*)self.navigationItem.rightBarButtonItem.customView;
+        
+        btn.selected =YES;
     }
-    [_upView addSubview:_saveBtn];
-    
-    UILabel *commentLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:[NSString stringWithFormat:@"(%@人评分)",self.dictDate[@"snum"]] color:[UIColor whiteColor]];
-    [commentLabel sizeToFit];
-    commentLabel.left = imageView.right +20;
-    commentLabel.top = 50;
-    [_upView addSubview:commentLabel];
-    
-    NSMutableString *cat = [NSMutableString stringWithFormat:@"%@",self.dictDate[@"cat"]];
-    [cat replaceOccurrencesOfString:@"," withString:@"/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, cat.length)];
-    UILabel *typeLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:cat color:[UIColor whiteColor]];
-    [typeLabel sizeToFit];
-    typeLabel.left = commentLabel.left;
-    typeLabel.top = commentLabel.bottom+15;
-    [_upView addSubview:typeLabel];
-    
-    UILabel *timeLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:[NSString stringWithFormat:@"片长:%@分钟",self.dictDate[@"dur"]] color:[UIColor whiteColor]];
-    [timeLabel sizeToFit];
-    timeLabel.left = commentLabel.left;
-    timeLabel.top = typeLabel.bottom + 15;
-    [_upView addSubview:timeLabel];
-    
-    UILabel *dayLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:[NSString stringWithFormat:@"%@大陆上映",self.dictDate[@"rt"]] color:[UIColor whiteColor]];
-    [dayLabel sizeToFit];
-    dayLabel.left = timeLabel.left;
-    dayLabel.top = timeLabel.bottom +15;
-    [_upView addSubview:dayLabel];
-    
-    [self setDescrptionData];
     
 }
-- (void)reserveBtn:(UIButton *)button
+
+- (void)setDownView
 {
-    button.selected = !button.selected;
-    if (button.selected ==YES) {
-        [self saveDate:self.myId];
+    _downImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, 280)];
+
+    _downImageView.userInteractionEnabled = YES;
+    UIButton *movieBtn = [[UIButton alloc] init];
+    movieBtn.size = CGSizeMake(40, 40);
+    movieBtn.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
+    [movieBtn setBackgroundImage:[UIImage imageNamed:@"play@2x"] forState:UIControlStateNormal];
+    movieBtn.center = _downImageView.center;
+    movieBtn.layer.cornerRadius = 5;
+    [movieBtn addTarget: self action:@selector(movieBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_downImageView addSubview:movieBtn];
+    [self.view addSubview:_downImageView];
+    [self createCollectionView];
+
+}
+- (void)setUpScrollView
+{
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-64)];
+    _scrollView.backgroundColor = [UIColor clearColor];
+    _scrollView.contentSize = CGSizeMake(0, 2*UIScreenHeight);
+    _scrollView.bounces = NO;
+    
+    UIView *uuuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, 280)];
+    uuuView.backgroundColor = [UIColor clearColor];
+    [_scrollView addSubview:uuuView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRespond:)];
+    tapGesture.numberOfTouchesRequired = 1;
+    [uuuView addGestureRecognizer:tapGesture];
+    
+    
+    [self.view addSubview:_scrollView];
+    [self reloadDescriptionData];
+
+}
+- (void)movieBtnClick
+{
+    if (self.dictDate[@"videourl"]!=nil) {
+        
+        //路径
+        NSURL *url = [NSURL URLWithString:self.dictDate[@"videourl"]];
+        
+        if (_moviePlayer) {
+            [_moviePlayer.moviePlayer stop];
+            _moviePlayer = nil;
+        }
+        
+        _moviePlayer = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
+        
+        //播放
+        [_moviePlayer.moviePlayer prepareToPlay];
+        [_moviePlayer.moviePlayer play];
+        
+        //显示
+        [self presentViewController:_moviePlayer animated:YES completion:nil];
+
+        
+    }
+}
+
+- (void)createCollectionView
+{
+    MyLayout *myLayout = [[MyLayout alloc] initWithSectionInsets:UIEdgeInsetsMake(5, 5, 5, 5) itemSpace:5 lineSpace:5];
+    
+    myLayout.delegate = self;
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 280, UIScreenWidth, UIScreenHeight-344) collectionViewLayout:myLayout];
+    _collectionView.delegate = self;
+    _collectionView.dataSource = self;
+    _collectionView.backgroundColor = [UIColor whiteColor];
+    [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:@"cellId"];
+    
+    [self.view addSubview: _collectionView];
+    [self reloadCollectionViewData];
+}
+- (void)reloadCollectionViewData
+{
+    __weak __typeof(self)weakSelf = self;
+    [HttpRequestHelper photoControlWithMyId:self.myId success:^(id responseObject){
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            NSArray *arrayImg = responseObject[@"data"];
+            if (arrayImg.count != 0) {
+                for (NSDictionary *dict in arrayImg) {
+                    [weakSelf.dateSourceCollection addObject:dict];
+                }
+            }
+            [weakSelf addtitleWithName:[NSString stringWithFormat:@"%ld张剧照",arrayImg.count]];
+            [weakSelf.collectionView reloadData];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        NSLog(@"error=%@",error);
+    }];
+    
+}
+#pragma mark-UICollcetionView代理协议
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _dateSourceCollection.count;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
+    NSDictionary*dict = _dateSourceCollection[indexPath.item];
+    [cell config:dict];
+    return cell;
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoDetailControl *detail = [[PhotoDetailControl alloc] init];
+    detail.dateSource = self.dateSourceCollection;
+    detail.photoNumber = indexPath.item;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+#pragma mark - MyLayout代理
+-(int)columnsInCollectionView
+{
+    return 3;
+}
+
+- (CGFloat)heightForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    //  DataModel *model = _dataArray[indexPath.item];
+    return 150+arc4random()%40;
+}
+
+#pragma mark-滑动手势调用方法
+- (void)tapGestureRespond:(UIGestureRecognizer*)ges
+{
+    self.showScrollView = !self.showScrollView;
+    [UIView animateWithDuration:1 animations:^{
+        CGRect frame = _scrollView.frame;
+        frame.origin.y = UIScreenHeight;
+        _scrollView.frame = frame;
+    }];
+}
+#pragma mark-返回界面调用方法
+- (void)backClick:(UIButton*)button
+{
+    if (self.showScrollView == YES) {
+        [UIView animateWithDuration:1 animations:^{
+            CGRect frame = _scrollView.frame;
+            frame.origin.y = 0;
+            _scrollView.frame = frame;
+        }];
+        self.showScrollView = NO;
     }else
     {
-        [self deleteDate:self.myId];
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    
-}
-#pragma mark-保存数据
-- (void)saveDate:(NSString *)strId
-{
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:self.dictDate[@"nm"] forKey:@"name"];
-    NSString*img = [ToolUtil changeImageStringWith:self.dictDate[@"img"]];
-    [dict setObject:img forKey:@"image"];
-    [dict setObject:strId forKey:@"myId"];
-    [[FilmCoreDateHelper share] insertCoreData:dict];
-}
-- (void)deleteDate:(NSString *)strId
-{
-    [[FilmCoreDateHelper share] deleteDataWith:strId];
-}
-- (void)shareBtn{
-    
 }
 #pragma mark- 加载简介数据
 - (void)reloadDescriptionData{
-    
     __weak DetailViewController *weakSelf = self;
     [HttpRequestHelper detailControlWithContainWithId:self.myId success:^(id responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             weakSelf.movieDescription = responseObject[@"data"][@"movie"][@"dra"];
             weakSelf.descriptionImage = responseObject[@"data"][@"movie"][@"photos"];
             weakSelf.dictDate = responseObject[@"data"][@"movie"];
-            [weakSelf createView];
+            [weakSelf setDescriptionView];
         }
-        
     } Failure:^(NSError *error) {
-        
         NSLog(@"error = %@",error);
     }];
 }
+- (void)setDescriptionView{
+    if (self.dictDate[@"videourl"]==nil) {
+        for (UIView*view in _downImageView.subviews) {
+            if ([view isKindOfClass:[UIButton class]]) {
+                UIButton*btn = (UIButton*)view;
+                btn.hidden = YES;
+            }
+        }
+    }
+    
+    [_downImageView sd_setImageWithURL:[NSURL URLWithString:[ToolUtil changeDeleteImageStringWith:self.dictDate[@"img"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    _upView = [[UIView alloc] initWithFrame:CGRectMake(0, 280, UIScreenWidth, UIScreenHeight*2)];
+    _upView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_upView];
+    
+    _bgImageview = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 126, 176)];
+    _bgImageview.backgroundColor = [UIColor whiteColor];
+    _bgImageview.layer.cornerRadius = 3;
+    _bgImageview.centerY = _upView.top;
+    [_scrollView addSubview:_bgImageview];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 3, 120, 170)];
+    NSString *img = [ToolUtil changeImageStringWith:self.dictDate[@"img"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:img] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [_bgImageview addSubview:imageView];
+    UIImageView *ddImage = [[UIImageView alloc] initWithFrame:CGRectMake(_bgImageview.right+30, _upView.top-30, 40, 20)];
+    ddImage.image = [[UIImage imageNamed:@"downImage@2x"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [_scrollView addSubview:ddImage];
+    
+    if (self.status == YES) {
+        StarView *start = [[StarView alloc] initWithFrame:CGRectMake(_bgImageview.right+10, _bgImageview.top+5, 90, 15)];
+        [_scrollView addSubview:start];
+        
+    }
+    
+    UILabel *nameLabel = [ToolUtil labelwithFrame:CGRectMake(_bgImageview.right+10, _bgImageview.top+30, 150, 30) font:23 text:self.dictDate[@"nm"] color:[UIColor whiteColor]];
+    nameLabel.font = [UIFont boldSystemFontOfSize:22];
+    [_scrollView addSubview:nameLabel];
+    
+    NSMutableString *cat = [NSMutableString stringWithFormat:@"%@",self.dictDate[@"cat"]];
+    [cat replaceOccurrencesOfString:@"," withString:@"/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, cat.length)];
+    UILabel *typeLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:cat color:[UIColor colorWithWhite:0.2 alpha:1]];
+    [typeLabel sizeToFit];
+    typeLabel.left = nameLabel.left;
+    typeLabel.top = 10;
+    [_upView addSubview:typeLabel];
+    
+    
+    UILabel *timeLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:[NSString stringWithFormat:@"片长:%@分钟",self.dictDate[@"dur"]] color:[UIColor colorWithWhite:0.2 alpha:1]];
+    [timeLabel sizeToFit];
+    timeLabel.left = typeLabel.left;
+    timeLabel.top = typeLabel.bottom + 7;
+    [_upView addSubview:timeLabel];
+    
+    UILabel *dayLabel = [ToolUtil labelwithFrame:CGRectZero font:14 text:[NSString stringWithFormat:@"%@大陆上映",self.dictDate[@"rt"]] color:[UIColor colorWithWhite:0.2 alpha:1]];
+    [dayLabel sizeToFit];
+    dayLabel.left = timeLabel.left;
+    dayLabel.top = timeLabel.bottom +7;
+    [_upView addSubview:dayLabel];
+    
+    [self setDescrptionData];
+    
+}
 - (void)setDescrptionData
 {
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _upView.bottom+20, UIScreenWidth-10, 10)];
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _bgImageview.bottom+20, UIScreenWidth-10, 10)];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = 10;//设置行的距离
     //!!!: 首行缩进2个中文字符
@@ -199,64 +376,14 @@
     descriptionLabel.frame =frame;
     [self.scrollView addSubview:descriptionLabel];
     
-    UIView *descriptionImage = [[UIView alloc] initWithFrame:CGRectMake(10, descriptionLabel.bottom+10, UIScreenWidth-20, 100)];
-    //添加点击剧照部位手势
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [descriptionImage addGestureRecognizer:tapGesture];
-
-    CGFloat imageWidth = (descriptionImage.width-5*5)/4;
-    CGFloat imageHeight = descriptionImage.height-10;
-    if (self.descriptionImage.count >=4) {
-        for (int i=0; i<4; i++) {
-            UIImageView *image = [[UIImageView alloc] init];
-            image.size = CGSizeMake(imageWidth, imageHeight);
-            image.top = 5;
-            image.left = i*(5+imageWidth)+5;
-            NSMutableString*mbString = [NSMutableString stringWithFormat:@"%@",_descriptionImage[i]];
-            [mbString replaceOccurrencesOfString:@"w" withString:@"200" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 25)];
-            [mbString replaceOccurrencesOfString:@"h" withString:@"280" options:NSCaseInsensitiveSearch range:NSMakeRange(5, 30)];
-            [image sd_setImageWithURL:[NSURL URLWithString:mbString] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-            image.layer.cornerRadius = 10;
-            image.clipsToBounds = YES;
-            [descriptionImage addSubview:image];
-        }
-    }else if (self.descriptionImage.count >0 && self.descriptionImage.count<4){
-        for (int i=0; i<self.descriptionImage.count; i++) {
-            UIImageView *image = [[UIImageView alloc] init];
-            image.size = CGSizeMake(imageWidth, imageHeight);
-            image.top = 5;
-            image.left = i*(5+imageWidth)+5;
-            NSMutableString*mbString = [NSMutableString stringWithFormat:@"%@",_descriptionImage[i]];
-            [mbString replaceOccurrencesOfString:@"w" withString:[NSString stringWithFormat:@"%d",(int)imageWidth] options:NSCaseInsensitiveSearch range:NSMakeRange(0, 25)];
-            [mbString replaceOccurrencesOfString:@"h" withString:[NSString stringWithFormat:@"%d",(int)imageHeight] options:NSCaseInsensitiveSearch range:NSMakeRange(5, 30)];
-            [image sd_setImageWithURL:[NSURL URLWithString:mbString] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-            image.layer.cornerRadius = 10;
-            image.clipsToBounds = YES;
-            [descriptionImage addSubview:image];
-        }
-    }else{
-        descriptionImage.height = 0;
-    }
-    [self.scrollView addSubview:descriptionImage];
-    
-    _separateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, descriptionImage.bottom+5, UIScreenWidth, 20)];
+    _separateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, descriptionLabel.bottom+5, UIScreenWidth, 20)];
     _separateLabel.backgroundColor = RGBColor(239, 239, 239);
     [self.scrollView addSubview:_separateLabel];
     self.scrollView.contentSize = CGSizeMake(0, _separateLabel.bottom);
-
     [self reloadActorData];
+    
+}
 
-    
-}
-#pragma mark- 点击剧照部分手势响应代码
-- (void)tapClick:(UITapGestureRecognizer*)tapGesture
-{
-    PhotoViewControl *photo = [[PhotoViewControl alloc] init];
-    photo.myId = self.myId;
-    [self.navigationController pushViewController:photo animated:YES];
-    
-    
-}
 #pragma mark- 加载演员导演数据
 - (void)reloadActorData{
     __weak DetailViewController *weakSelf = self;
@@ -264,7 +391,6 @@
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSArray *directors = responseObject[@"data"][@"directors"];
             NSArray *actors = responseObject[@"data"][@"actors"];
-
             for (NSDictionary *dict in directors) {
          
                 if (dict[@"cnm"] !=nil&&dict[@"enm"] !=nil&&dict[@"avatar"] !=nil&&dict[@"id"]!=nil) {
@@ -308,6 +434,8 @@
         imageView.size = CGSizeMake(imageWidth, imageHeight);
         imageView.top = dLabel.bottom;
         imageView.left = i*(imageWidth+7);
+        imageView.clipsToBounds = YES;
+        imageView.layer.cornerRadius = 8;
         NSString *imString = [ToolUtil changeImageStringWith:self.directorArray[i][@"avatar"]];
         [imageView sd_setImageWithURL:[NSURL URLWithString:imString] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         [actorScrollView addSubview:imageView];
@@ -333,6 +461,8 @@
         imageView.size = CGSizeMake(imageWidth, imageHeight);
         imageView.top = dLabel.bottom;
         imageView.left = i*(imageWidth+7)+aLabel.left;
+        imageView.clipsToBounds = YES;
+        imageView.layer.cornerRadius = 8;
         NSString *imString = [ToolUtil changeImageStringWith:self.actorArray[i][@"avatar"]];
         [imageView sd_setImageWithURL:[NSURL URLWithString:imString] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         [actorScrollView addSubview:imageView];
@@ -370,7 +500,7 @@
 }
 - (void)actorClick:(UIButton*)button
 {
-    NSString *actorId = [NSString stringWithFormat:@"%ld",button.tag-10];
+    NSString *actorId = [NSString stringWithFormat:@"%d",button.tag-10];
     ActorDetailViewController *actor = [[ActorDetailViewController alloc] init];
     actor.myId = actorId;
     [self.navigationController pushViewController:actor animated:YES];
@@ -416,10 +546,37 @@
     }else{
         view.height = 0;
     }
+    
     self.scrollView.contentSize = CGSizeMake(0, view.bottom);
 
+    _upView.height = self.scrollView.contentSize.height-10;
     
     
+}
+#pragma mark-保存数据
+- (void)saveDate:(NSString *)strId
+{
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:self.dictDate[@"nm"] forKey:@"name"];
+        NSString*img = [ToolUtil changeImageStringWith:self.dictDate[@"img"]];
+        [dict setObject:img forKey:@"image"];
+        [dict setObject:strId forKey:@"myId"];
+        [[FilmCoreDateHelper share] insertCoreData:dict];
+    
+}
+- (void)deleteDate:(NSString *)strId
+{
+    [[FilmCoreDateHelper share] deleteDataWith:strId];
+}
+- (void)reserveBtn:(UIButton*)button{
+    
+    button.selected = !button.selected;
+    if (button.selected ==YES) {
+        [self saveDate:self.myId];
+    }else
+    {
+        [self deleteDate:self.myId];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

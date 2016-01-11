@@ -20,7 +20,7 @@
     self.view.backgroundColor = RGBColor(245, 245, 245);
 
     [self setNav];
-    [self createBtn];
+    [self createBtn2];
 }
 - (void)setNav{
     
@@ -28,50 +28,57 @@
     [self addUIbarButtonItemWithImage:@"menu@2x" left:NO frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
     
 }
-- (void)createBtn
+
+- (void)createBtn2
 {
+    UIScrollView *scrollViewDown = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-113)];
+    [self.view addSubview:scrollViewDown];
+    
     UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, UIScreenWidth-30, 30)];
     placeLabel.textAlignment = NSTextAlignmentLeft;
-    placeLabel.text = @"地区";
-    [self.view addSubview:placeLabel];
+    placeLabel.text = @"类型";
+    [scrollViewDown addSubview:placeLabel];
     
-    CGFloat width = (UIScreenWidth-60)/4;
+    CGFloat width = (UIScreenWidth/2-60)/2;
     CGFloat height = 40;
-    
     NSArray *categoryArray = @[@"剧情", @"喜剧", @"爱情", @"动画", @"动作", @"恐怖", @"惊悚", @"悬疑", @"冒险", @"科幻", @"犯罪", @"战争", @"纪录片"];
+    
     for ( int i = 0; i< categoryArray.count; i++) {
-        NSInteger section = i/4;
-        NSInteger row = i%4;
+        NSInteger section = i/2;
+        NSInteger row = i%2;
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(15+row*(width+10), placeLabel.bottom+10+section*(height+10), width, height)];
         [btn setTitle:categoryArray[i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(categoryBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        btn.backgroundColor = [UIColor whiteColor];
+        btn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        btn.backgroundColor = RGBColor(249, 212, 9);
         btn.tag = 3001+i;
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.view addSubview:btn];
+        btn.layer.cornerRadius = 15;
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [scrollViewDown addSubview:btn];
+        if (i == categoryArray.count-1) {
+            scrollViewDown.contentSize = CGSizeMake(0, btn.bottom);
+        }
         
     }
-    
-    UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 260, UIScreenWidth-30, 30)];
+    UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(UIScreenWidth/2, 20, UIScreenWidth-30, 30)];
     categoryLabel.textAlignment = NSTextAlignmentLeft;
-    categoryLabel.text = @"类型";
-    [self.view addSubview:categoryLabel];
+    categoryLabel.text = @"地区";
+    [scrollViewDown addSubview:categoryLabel];
     
     NSArray *regionArray = @[@"大陆", @"美国", @"法国", @"英国", @"日本", @"韩国", @"印度", @"泰国", @"香港", @"德国", @"其他"];
     for (int i = 0; i<regionArray.count; i++) {
-        NSInteger section = i/4;
-        NSInteger row = i%4;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(15+row*(width+10), categoryLabel.bottom+10+section*(height+10), width, height)];
+        NSInteger section = i/2;
+        NSInteger row = i%2;
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(UIScreenWidth/2+row*(width+10), categoryLabel.bottom+10+section*(height+10), width, height)];
         [btn setTitle:regionArray[i] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(placeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        btn.backgroundColor = [UIColor whiteColor];
+        btn.layer.cornerRadius = 15;
+        btn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        btn.backgroundColor = RGBColor(249, 212, 9);
         btn.tag = 2002+i;
-        [self.view addSubview:btn];
+        [scrollViewDown addSubview:btn];
     }
-    
 }
 - (void)placeBtnClick:(UIButton *)button
 {

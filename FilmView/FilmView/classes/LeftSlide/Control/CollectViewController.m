@@ -52,7 +52,7 @@
     layout.minimumInteritemSpacing = 5;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight-108)collectionViewLayout:layout];
-    _collectionView.backgroundColor = [[UIColor cyanColor] colorWithAlphaComponent:0.3];
+    _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [_collectionView registerClass:[CollectControlCell class] forCellWithReuseIdentifier:@"cellId"];

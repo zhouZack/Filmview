@@ -8,15 +8,15 @@
 
 #import "MovieViewController.h"
 #import "AppDelegate.h"
-#import "WaitShowViewController.h"
 #import "MovieModel.h"
 #import "PagedFlowView.h"
 #import "FXBlurView.h"
 #import "MovieCell.h"
 #import "DetailViewController.h"
-#import "WaitShowViewController.h"
+
 #import "WaitshowControl.h"
 #import "StarView.h"
+#import "SearchViewController.h"
 
 @interface MovieViewController ()<UITableViewDelegate,UITableViewDataSource,PagedFlowViewDataSource,PagedFlowViewDelegate>
 
@@ -60,6 +60,8 @@
     [_segmentC addTarget:self action:@selector(changeTypePrice:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = _segmentC;
     [self addUIbarButtonItemWithImage:@"menu@2x" left:NO frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(changeLeft)];
+    [self addUIbarButtonItemWithImage:@"save@2x" left:YES frame:CGRectMake(0, 0, 20, 20) target:self action:@selector(searchClcik)];
+    
 
     
     
@@ -71,6 +73,11 @@
     }else{
         _baseScrollview.contentOffset = CGPointMake(UIScreenWidth, 0);
     }
+}
+- (void)searchClcik
+{
+    SearchViewController *search = [[SearchViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 - (void)reloadDate{
     
@@ -137,7 +144,8 @@
 #pragma mark-UITableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dateSource.count+1;
+//    return _dateSource.count+1;
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -203,8 +211,10 @@
     
     DetailViewController *detail = [[DetailViewController alloc] init];
     
+    detail.status = YES;
     MovieModel *model = _dateSource[indexPath.row-1];
     detail.myId = model.myId;
+    detail.imageViewName = model.img;
     [self.navigationController pushViewController:detail animated:YES];
 }
 -(CGSize)sizeForPageInFlowView:(PagedFlowView *)flowView{
@@ -223,6 +233,8 @@
     DetailViewController*detail = [[DetailViewController alloc] init];
     MovieModel *model = _dateSource[index];
     detail.myId = model.myId;
+    detail.status = YES;
+    detail.imageViewName = model.img;
     [self.navigationController pushViewController:detail animated:YES];
     
 }

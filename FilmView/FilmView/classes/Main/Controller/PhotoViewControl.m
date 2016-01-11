@@ -14,18 +14,18 @@
 @interface PhotoViewControl ()<UICollectionViewDataSource,UICollectionViewDelegate,MyLayoutDelegate>
 
 @property (nonatomic ,strong)UICollectionView *collectionView;
-@property (nonatomic ,strong)NSMutableArray *dateSource;
+@property (nonatomic ,strong)NSMutableArray *dateSourceCollection;
 @property (nonatomic ,strong)NSMutableArray *heightArr;//保存cell高度的数组
 @end
 
 @implementation PhotoViewControl
 
-- (NSMutableArray*)dateSource
+- (NSMutableArray*)dateSourceCollection
 {
-    if (_dateSource ==nil) {
-        _dateSource = [[NSMutableArray alloc] init];
+    if (_dateSourceCollection ==nil) {
+        _dateSourceCollection = [[NSMutableArray alloc] init];
     }
-    return _dateSource;
+    return _dateSourceCollection;
 }
 - (NSMutableArray *)heightArr
 {
@@ -45,14 +45,6 @@
 
 - (void)createCollection
 {
-//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    CGFloat width = (UIScreenWidth-31)/4;
-//    CGFloat heith = 120;
-//    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
-//    layout.itemSize = CGSizeMake(width, heith);
-//    layout.minimumInteritemSpacing = 5;
-//    layout.minimumLineSpacing = 5;
-    
     MyLayout *myLayout = [[MyLayout alloc] initWithSectionInsets:UIEdgeInsetsMake(5, 5, 5, 5) itemSpace:5 lineSpace:5];
     
     myLayout.delegate = self;
@@ -73,7 +65,7 @@
             NSArray *arrayImg = responseObject[@"data"];
             if (arrayImg.count != 0) {
                 for (NSDictionary *dict in arrayImg) {
-                    [weakSelf.dateSource addObject:dict];
+                    [weakSelf.dateSourceCollection addObject:dict];
                 }
             }
             [weakSelf addtitleWithName:[NSString stringWithFormat:@"%ld张剧照",arrayImg.count]];
@@ -89,19 +81,19 @@
 #pragma mark-UICollcetionView代理协议
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _dateSource.count;
+    return _dateSourceCollection.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
-    NSDictionary*dict = _dateSource[indexPath.item];
+    NSDictionary*dict = _dateSourceCollection[indexPath.item];
     [cell config:dict];
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoDetailControl *detail = [[PhotoDetailControl alloc] init];
-    detail.dateSource = self.dateSource;
+    detail.dateSource = self.dateSourceCollection;
     detail.photoNumber = indexPath.item;
     [self.navigationController pushViewController:detail animated:YES];
 }

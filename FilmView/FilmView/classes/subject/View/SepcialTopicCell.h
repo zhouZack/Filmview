@@ -10,8 +10,8 @@
 #import "SepcialTopicModel.h"
 @interface SepcialTopicCell : UITableViewCell
 
-@property (nonatomic ,copy)void(^block)(NSString*);
 
+@property (nonatomic ,copy)void(^block)(NSString*);
 
 - (void)config:(SepcialTopicModel*)model;
 

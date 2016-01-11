@@ -17,7 +17,8 @@
         [self setValuesForKeysWithDictionary:dict];
         NSString*imge = [ToolUtil changeImageStringWith:dict[@"img"]];
         self.img = imge;
-        self.myId = dict[@"id"];
+        NSNumberFormatter *forma  = [[NSNumberFormatter alloc] init];
+        self.myId = [forma stringFromNumber:dict[@"id"]];;
     }
     return self;
 }

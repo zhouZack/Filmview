@@ -10,7 +10,7 @@
 #import "CollectViewController.h"
 #import "SearchViewController.h"
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 
@@ -22,7 +22,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor orangeColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leftbackiamge"]];
+//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leftbackiamge"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ImageBack"]];
     imageView.frame = self.view.bounds;
     [self.view addSubview:imageView];
     
@@ -39,7 +40,7 @@
     [self.view addSubview:_tableView];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 2;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString*cellId = @"cellId";
@@ -50,34 +51,32 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = cell.detailTextLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:20.0f];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+
     if (indexPath.row ==0) {
-        cell.textLabel.text = @"搜索";
-    }else if (indexPath.row ==1){
         cell.textLabel.text = @"我的收藏";
-    }else{
+    }else if (indexPath.row ==1){
         cell.textLabel.text = @"清除缓存";
+        //!!!: 清除缓存
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1fM", [[SDImageCache sharedImageCache] getSize]/1024.0/1024.0];
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = @"1MB";
     }
+
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    if (indexPath.row ==0) {
-        [app.testVC2 closedLeftView];
-        SearchViewController *search = [[SearchViewController alloc] init];
-        [(UINavigationController *)app.mainTabBarController.selectedViewController pushViewController:search animated:YES];
-    }else if (indexPath.row ==1){
+    if (indexPath.row ==0){
         [app.testVC2 closedLeftView];
        CollectViewController *collect = [[CollectViewController alloc] init];
         [(UINavigationController *)app.mainTabBarController.selectedViewController pushViewController:collect animated:YES];
     }else{
-        
+        [[SDImageCache sharedImageCache] clearDisk];
+        [_tableView reloadData];
+
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

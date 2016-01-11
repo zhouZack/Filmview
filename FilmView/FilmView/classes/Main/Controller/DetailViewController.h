@@ -12,4 +12,6 @@
 
 @property (nonatomic ,strong)MovieModel *moedel;
 @property (nonatomic ,strong)NSString *myId;
+@property (nonatomic ,copy)NSString *imageViewName;
+@property (nonatomic ,assign)BOOL  status;
 @end

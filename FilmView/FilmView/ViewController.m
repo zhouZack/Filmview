@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
-
 @interface ViewController ()
+
+@property (nonatomic ,strong)UITextField *name;
+
+@property (nonatomic ,strong)UITextField *passWord;
 
 @end
 
@@ -17,14 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    UIView *view = [[UIView alloc] init];
-    view.top = 10;
-    view.left = 100;
-    view.size = CGSizeMake(50, 100);
-    view.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:view];
+    self.view.backgroundColor = [UIColor whiteColor];
+  
+   
+    
 }
-
+- (void)btnClick:(UIButton*)btn
+{
+    
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [_passWord resignFirstResponder];
+    [_name resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

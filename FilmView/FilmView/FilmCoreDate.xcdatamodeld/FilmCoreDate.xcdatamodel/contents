@@ -5,7 +5,12 @@
         <attribute name="myId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="UserItem" representedClassName="UserItem" syncable="YES">
+        <attribute name="passWord" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="CollectItem" positionX="-351" positionY="-162" width="128" height="88"/>
+        <element name="UserItem" positionX="-524" positionY="-154" width="128" height="73"/>
     </elements>
 </model>

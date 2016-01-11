@@ -41,4 +41,12 @@
 - (void)setPanEnable:(BOOL)enabled;
 
 
+
+
+
+
+
+
+
+
 @end

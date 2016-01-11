@@ -42,7 +42,7 @@
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
+    [btn setTitle:@"已收藏" forState:UIControlStateSelected];
     if (left == YES) {
         self.navigationItem.leftBarButtonItem = item;
     }else{
